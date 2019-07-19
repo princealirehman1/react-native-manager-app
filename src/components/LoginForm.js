@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Card , Form , Item , Input , CardItem , Text , Button , Label , Spinner , Content , Title } from 'native-base';
+import { Platform } from 'react-native';
+import { Card , Header , Form , Item , Input , CardItem , Text , Button , Label , Spinner , Content , Title , Container , Left , Body , Right} from 'native-base';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
@@ -31,6 +32,15 @@ class LoginForm extends Component{
 
         return(
 
+            <Container>
+
+            <Header>
+                        
+                        <Body style={ Platform.select({android:{ flexDirection:'row' , justifyContent:'center' }})} >
+                            <Title> Manager App </Title>
+                        </Body> 
+            </Header>
+
             <Card>
 
                 <CardItem header style={{ justifyContent : 'center' }}>
@@ -40,14 +50,14 @@ class LoginForm extends Component{
                 <Form style={{ padding:8 }}>
                     <Item>
                         <Label style={styles.inputLabel} ><Text>Email</Text></Label>
-                        <Input placeholderTextColor='#B8B8B8' style={styles.inputField} placeholder="email@something.com" onChangeText={(newEmail)=>{ this.onEmailChange(newEmail) }} value={ this.props.email }/>
+                        <Input placeholderTextColor='#B8B8B8' inlineLabel style={styles.inputField} placeholder="email@something.com" onChangeText={(newEmail)=>{ this.onEmailChange(newEmail) }} value={ this.props.email }/>
                     </Item>
 
                     <Item>
 
                         <Label style={styles.inputLabel}><Text>Password</Text></Label>
 
-                        <Input style={styles.inputField} textContentType="password" secureTextEntry={true} onChangeText={ (newPassword)=>{this.onPasswordChange(newPassword)} } value={this.props.password}/>
+                        <Input style={styles.inputField} placeholderTextColor='#B8B8B8' textContentType="password" placeholder="Password" secureTextEntry={true} onChangeText={ (newPassword)=>{this.onPasswordChange(newPassword)} } value={this.props.password}/>
                     </Item>
 
                     { this.renderErrorMessage() }
@@ -59,6 +69,8 @@ class LoginForm extends Component{
                 </Form>
 
             </Card>
+
+            </Container>
         );
     }
 
@@ -90,7 +102,7 @@ class LoginForm extends Component{
 
                 <Content>
 
-                    <Spinner />
+                    <Spinner color="blue"/>
 
                 </Content>
             ) : (
