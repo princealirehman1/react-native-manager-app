@@ -1,12 +1,14 @@
 import * as constants from '../constants';
 
-const INITIAL = { name:'' , phone:'',shift:'Monday' , employees:[] };
+const INITIAL = { name:'' , phone:'',shift:'Monday' };
 
 export default (state , action) => {
 
     switch(action.type){
 
         case constants.ADD_EMPLOYEE_NAME_CHANGED:{
+            
+            console.log(state);
 
             return({ ...state , name: action.payload });
 

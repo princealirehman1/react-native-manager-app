@@ -13,7 +13,6 @@ class EmployeeList extends Component{
     componentDidMount(){
 
         this.props.getListOfEmployees();
-
     }
 
     render(){
@@ -44,12 +43,11 @@ class EmployeeList extends Component{
 
                         <CardItem>
 
-                            <Body>
 
-                            <List>
+                            <Content>
 
                                 { this.props.employeeList.employeeList.length > 0 ? (
-                                    <FlatList  
+                                    <FlatList style={{ flex:1 }}
                                     data = { this.props.employeeList.employeeList } 
                                     keyExtractor = { (item) => { item.key } }
                                     renderItem = { (emaployee) => renderListItem(emaployee.item) }
@@ -60,9 +58,8 @@ class EmployeeList extends Component{
                                 ) 
                                 }
                                         
-                            </List>
+                            </Content>
 
-                            </Body>
 
                         </CardItem>
 
@@ -80,8 +77,10 @@ const renderListItem=(item)=>{
 
     return(
 
-        <ListItem  key={ item.key }>
-            <Text> { item.name } </Text>
+        <ListItem  key={ item.key } style={{ marginHorizontal:10 }} onPress={()=>{  }}>
+            <Body>
+                <Text > { item.name } </Text>            
+            </Body>
         </ListItem>
     );
 

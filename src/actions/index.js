@@ -128,7 +128,8 @@ export const saveEmployeeData = (name , phone , shift) => {
 
             dispatch({type: EMPLOYEE_DATA_CREATED});
 
-            Actions.pop();
+            Actions.reset("EmployeeList");
+
 
         });
 
