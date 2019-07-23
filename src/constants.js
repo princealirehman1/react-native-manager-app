@@ -8,3 +8,4 @@ export const ADD_EMPLOYEE_PHONE_CHANGED="add_employee_phone_changed";
 export const ADD_EMPLOYEE_SHIFT_CHANGED="add_employee_shift_changed";
 export const SAVE_EMPLOYEE_DATA="save_employee_data";
 export const EMPLOYEE_DATA_CREATED="employee_data_created";
+export const EMPLOYEE_LIST="employee_list";

@@ -1,5 +1,7 @@
 import { EMAIL_CHANGED , PASSWORD_CHANGED , LOGIN_USER_SUCCESS , LOGIN_USER_FAILED , SHOW_SPINNER , 
-    ADD_EMPLOYEE_NAME_CHANGED, ADD_EMPLOYEE_PHONE_CHANGED, ADD_EMPLOYEE_SHIFT_CHANGED , SAVE_EMPLOYEE_DATA , EMPLOYEE_DATA_CREATED} from '../constants';
+    ADD_EMPLOYEE_NAME_CHANGED, ADD_EMPLOYEE_PHONE_CHANGED, ADD_EMPLOYEE_SHIFT_CHANGED , SAVE_EMPLOYEE_DATA , EMPLOYEE_DATA_CREATED , EMPLOYEE_LIST} from '../constants';
+
+import _ from 'lodash';
 
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -135,5 +137,29 @@ export const saveEmployeeData = (name , phone , shift) => {
     // return({
     //     type: SAVE_EMPLOYEE_DATA,
     // });
+
+}
+
+export const getListOfEmployees =()=>{
+
+    const { currentUser } = firebase.auth();
+
+    return(dispatch)=>{
+
+         firebase.database().ref(`/users/${currentUser.uid}/employees`).on('value',(snapshot)=>{
+
+            const employeees = _.map(snapshot.val() , (value , key )=>{
+
+                console.log("Value: " + value);
+                console.log("Key: " + key);
+
+                return({ ...value, key });
+
+            });
+
+            dispatch({type:EMPLOYEE_LIST , payload: employeees});
+
+        });
+    }
 
 }
