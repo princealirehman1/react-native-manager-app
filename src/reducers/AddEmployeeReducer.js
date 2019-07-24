@@ -37,6 +37,11 @@ export default (state , action) => {
             return({ ...state, name:'' , phone:'',shift:'' });
         }
 
+        case constants.UPDATE_INITIAL_STATE_EMPLOYEE:{
+
+            return({ ...state, [action.payload.keyy] : action.payload.valuee });
+        }
+
         default:{
 
             return(INITIAL);

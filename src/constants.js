@@ -9,3 +9,6 @@ export const ADD_EMPLOYEE_SHIFT_CHANGED="add_employee_shift_changed";
 export const SAVE_EMPLOYEE_DATA="save_employee_data";
 export const EMPLOYEE_DATA_CREATED="employee_data_created";
 export const EMPLOYEE_LIST="employee_list";
+export const EMPLOYEE_UPDATED="employee_updated";
+export const UPDATE_INITIAL_STATE_EMPLOYEE="update_initial_state_employee";
+export const DELETE_EMPLOYEE="delete_employee";

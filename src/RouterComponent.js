@@ -21,7 +21,7 @@ const RouterComponent = () =>{
                 <Scene key="Dashboard">
 
                     <Scene key="EmployeeList" component={EmployeeList}  hideNavBar={true} initial/>
-                    <Scene key ="AddEmployee" component={AddEmployee} hideNavBar={true}/>
+                    <Scene key ="AddEmployee" component={AddEmployee} hideNavBar={true}  />
         
                 </Scene>
 

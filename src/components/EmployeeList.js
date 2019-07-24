@@ -47,10 +47,11 @@ class EmployeeList extends Component{
                             <Content>
 
                                 { this.props.employeeList.employeeList.length > 0 ? (
-                                    <FlatList style={{ flex:1 }}
+                                    <FlatList
+                                    style={{ paddingBottom:50 }} 
                                     data = { this.props.employeeList.employeeList } 
                                     keyExtractor = { (item) => { item.key } }
-                                    renderItem = { (emaployee) => renderListItem(emaployee.item) }
+                                    renderItem = { (emaployee) => renderListItem(emaployee.item) } horizontal={ false } showsHorizontalScrollIndicator={ false } showsVerticalScrollIndicator={ false }
                                     extraData={ this.props.employeeList.employeeList.length }
                                      />
                                 ) : (
@@ -77,7 +78,7 @@ const renderListItem=(item)=>{
 
     return(
 
-        <ListItem  key={ item.key } style={{ marginHorizontal:10 }} onPress={()=>{  }}>
+        <ListItem  key={ item.key } style={{ marginHorizontal:10 }} onPress={()=>{ Actions.AddEmployee({employee: item})}} >
             <Body>
                 <Text > { item.name } </Text>            
             </Body>

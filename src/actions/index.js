@@ -1,5 +1,5 @@
 import { EMAIL_CHANGED , PASSWORD_CHANGED , LOGIN_USER_SUCCESS , LOGIN_USER_FAILED , SHOW_SPINNER , 
-    ADD_EMPLOYEE_NAME_CHANGED, ADD_EMPLOYEE_PHONE_CHANGED, ADD_EMPLOYEE_SHIFT_CHANGED , SAVE_EMPLOYEE_DATA , EMPLOYEE_DATA_CREATED , EMPLOYEE_LIST} from '../constants';
+    ADD_EMPLOYEE_NAME_CHANGED,DELETE_EMPLOYEE, UPDATE_INITIAL_STATE_EMPLOYEE , EMPLOYEE_UPDATED , ADD_EMPLOYEE_PHONE_CHANGED, ADD_EMPLOYEE_SHIFT_CHANGED , SAVE_EMPLOYEE_DATA , EMPLOYEE_DATA_CREATED , EMPLOYEE_LIST} from '../constants';
 
 import _ from 'lodash';
 
@@ -163,4 +163,48 @@ export const getListOfEmployees =()=>{
         });
     }
 
+}
+
+export const updateEmployee=(key,name,phone,shift)=>{
+
+    const { currentUser } = firebase.auth();
+
+
+    return (dispatch)=>{
+
+        firebase.database().ref(`/users/${ currentUser.uid }/employees/${key}`).set({name,phone,shift}).then((respose)=>{
+
+            dispatch({type:EMPLOYEE_UPDATED});
+
+            Actions.reset("EmployeeList");
+
+        });
+
+    }
+
+}
+
+export const updateInitialStateForEmployee = ( keyy , valuee )=>{
+
+    return({ type: UPDATE_INITIAL_STATE_EMPLOYEE , payload: { keyy , valuee }  });
+}
+
+export const deleteEmployee=(uid)=>{
+
+    console.log("*** UID ***");
+    console.log(uid);
+
+    return(dispatch)=>{
+
+        const { currentUser } = firebase.auth();
+
+        firebase.database().ref(`/users/${ currentUser.uid}/employees/${uid}`).remove().then((success)=>{
+
+            dispatch({type:EMPLOYEE_UPDATED});
+
+            Actions.reset("EmployeeList");
+
+        });
+
+    }
 }

@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
-import { Container, Header, Left, Body, Right, Icon, Title , Text , Card, Button, Form, Item, Input, Label, Picker} from 'native-base';
+import { Container, Header, Left, Body, Right, View , Icon, Title , Text , Card, Button, Form, Item, Input, Label, Picker} from 'native-base';
 import { Actions } from 'react-native-router-flux';
+import Communications from 'react-native-communications';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import _ from 'lodash';
 
 class AddEmployee extends Component {
+
+    componentDidMount=()=>{
+
+
+        const { employee } = this.props;
+
+        _.each(this.props.employee, (value , key)=>{
+
+
+            this.props.updateInitialStateForEmployee( key , value );
+
+        });
+
+
+    }
 
     render(){
 
@@ -17,7 +34,7 @@ class AddEmployee extends Component {
                 <Header>
                     <Left>
     
-                        <Button onPress={ ()=>{ Actions.pop() }  } transparent>
+                        <Button onPress={()=>{ Actions.reset("EmployeeList") }} transparent>
     
                             <Icon name="arrow-back" style={Platform.select({android:{ color:'white' },ios:{color:'#64B5F6' }})}/>
     
@@ -66,17 +83,29 @@ class AddEmployee extends Component {
                             </Item> */}
     
                             <Item>
-                                <Button onPress={()=>{this.props.saveEmployeeData(name,phone,shift)}}  style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}><Text>Save</Text></Button>
+                                <Button onPress={()=>{ this.props.employee ? ( this.props.updateEmployee(this.props.employee.key, name ,phone, shift) ) : ( this.props.saveEmployeeData(name,phone,shift) )}}  style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}>
+                                    <Text>Save</Text>
+                                </Button>
                             </Item>
     
-                            <Item>
-                                <Button  style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}><Text>Text Schedule</Text></Button>
-                            </Item>
+                            {
+                                phone.length>0 ? (
+                                    <Item>
+                                        <Button onPress={()=>{ Communications.text(phone,`Your Scheduled Meeting is at: ${ shift } \n Thank You`) }} style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}><Text>Text Schedule</Text></Button>
+                                    </Item>) : (
+                                        <View></View>
+                                    )
+                            }
+
     
-                            <Item >
-                                <Button  style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}><Text>Fire</Text></Button>
-                            </Item>
-    
+                            { this.props.employee ? (
+                                <Item >
+                                    <Button onPress={()=>{ this.props.deleteEmployee(this.props.employee.key) }} style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}><Text>Fire</Text></Button>
+                                </Item>
+                            ):(
+                                <View></View>
+                            ) }
+                            
                         </Form>
                         
                 </Card>
