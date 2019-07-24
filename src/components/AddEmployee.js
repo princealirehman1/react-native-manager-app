@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
-import { Container, Header, Left, Body, Right, View , Icon, Title , Text , Card, Button, Form, Item, Input, Label, Picker} from 'native-base';
+import { Platform , Modal } from 'react-native';
+import { Container, Header, Left, Body, Right, View , Icon, Title , Text , Card, Button, Form, Item, Input, Label, Picker, CardItem} from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Communications from 'react-native-communications';
 import { connect } from 'react-redux';
@@ -8,6 +8,11 @@ import * as actions from '../actions';
 import _ from 'lodash';
 
 class AddEmployee extends Component {
+
+    state={
+
+        showModal:false
+    }
 
     componentDidMount=()=>{
 
@@ -91,7 +96,7 @@ class AddEmployee extends Component {
                             {
                                 phone.length>0 ? (
                                     <Item>
-                                        <Button onPress={()=>{ Communications.text(phone,`Your Scheduled Meeting is at: ${ shift } \n Thank You`) }} style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}><Text>Text Schedule</Text></Button>
+                                        <Button onPress={()=>{ Communications.text(phone,`Your Scheduled Meeting is at: ${ shift } \nThank You`) }} style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}><Text>Text Schedule</Text></Button>
                                     </Item>) : (
                                         <View></View>
                                     )
@@ -100,7 +105,7 @@ class AddEmployee extends Component {
     
                             { this.props.employee ? (
                                 <Item >
-                                    <Button onPress={()=>{ this.props.deleteEmployee(this.props.employee.key) }} style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}><Text>Fire</Text></Button>
+                                    <Button onPress={()=>{ this.setState({ showModal:true }) }} style={{ flex:1 , width:null , justifyContent:'center' , marginTop:8}}><Text>Fire</Text></Button>
                                 </Item>
                             ):(
                                 <View></View>
@@ -109,6 +114,32 @@ class AddEmployee extends Component {
                         </Form>
                         
                 </Card>
+
+                <Modal visible={ this.state.showModal } transparent  animationType={ 'slide' } onDismiss={()=>{}}>
+
+                                <View style={{ flex:1 , justifyContent:'center' , alignContent: 'center', alignItems: 'center', }}>
+
+                                <Card>
+
+                                    <CardItem >
+
+    
+                                        <Text style={{ fontSize:15 , color:'black' }}>Are you sure you want to delete?</Text>
+
+                                    </CardItem>
+
+                                    <CardItem>
+
+                                        <Button style={{ flex:1 , marginHorizontal:4}} block onPress={()=>{ this.props.deleteEmployee(this.props.employee.key) }}><Text>Yes</Text></Button>
+                                        <Button style={{ flex:1 , marginHorizontal:4}} block onPress={()=>{ this.setState({ showModal:false }) }}><Text>No</Text></Button>
+
+                                    </CardItem>
+                                </Card>
+
+                                </View>
+
+
+                </Modal>
     
             </Container>
         );
